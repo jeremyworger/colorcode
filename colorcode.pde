@@ -13,7 +13,7 @@ void setup() {
 
 void draw() {
   while (null != frame) {
-    frame = loadImage("foo", "png");
+    frame = loadImage("frame-", "png");
   }
   json.setInt("frame number", framenumber);
   saveJSONObject(json, "data/framedata.json");
