@@ -1,10 +1,13 @@
 JSONObject json;    // store all frame/color information
 PImage frame;       // current frame to be processed
 int framenumber;    // counter for the frame number
+String filename;    // name of the frame image
 PFont font;
 
 void setup() {
-  framenumber = 0;
+  framenumber = 1;
+  filename = "frame-" + framenumber + ".png";
+  frame = loadImage(filename, "png");
   json = new JSONObject();
   noLoop();                         // run draw() only once
   size(200,200);                    // set up canvas
@@ -13,7 +16,11 @@ void setup() {
 
 void draw() {
   while (null != frame) {
-    frame = loadImage("frame-", "png");
+    // do image processing
+    frame = loadImage(filename, "png");
+    // prepare next step
+    framenumber += 1;
+    filename = "frame-" + framenumber + ".png";
   }
   json.setInt("frame number", framenumber);
   saveJSONObject(json, "data/framedata.json");
