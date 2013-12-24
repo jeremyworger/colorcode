@@ -8,3 +8,4 @@ references
 ----------
 * [processing](http://processing.org)
 * [JSON](http://json.org/)
+* [Code 128](https://en.wikipedia.org/wiki/Code_128)
