@@ -1,3 +1,8 @@
+/* This code (crudely) extracts the color value of each pixel
+ * of each frame supplied. It's performance is not worth an 
+ * application beyond a few (ten) frames.
+ */
+
 JSONObject json;    // store all frame/color information
 JSONArray frames;   // to store all frame-dicts
 PImage frameimage;  // current frame to be processed
