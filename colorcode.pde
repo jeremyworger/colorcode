@@ -28,9 +28,7 @@ void draw() {
     for (int i=0; i<frameimage.pixels.length; i++) {
       // hex color = key in dict
       rgb = frameimage.pixels[i];
-      if (colorstats.hasKey(hex(rgb))) {
-        colorstats.add(hex(rgb), 1);
-      }
+      colorstats.add(hex(rgb), 1);
     }
     // prepare next step
     framenumber += 1;
