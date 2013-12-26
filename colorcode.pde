@@ -1,5 +1,3 @@
-import org.JSON.JSONException;
-
 JSONObject json;    // store all frame/color information
 JSONArray frames;   // to store all frame-dicts
 PImage frameimage;  // current frame to be processed
@@ -26,26 +24,28 @@ void setup() {
 void draw() {
   int oldvalue;
   while (null != frameimage) {
+    println("processing frame " + framenumber);
     // display the image
     image(frameimage, 0, 0);
     // do image processing
     for (int i=0; i<frameimage.pixels.length; i++) {
       // hex color = key in dict
       rgb = frameimage.pixels[i];
-      // adding 1 to value of non-existing key initializes the pair
+      // increase count
       try {
         oldvalue = colorstats.getInt(hex(rgb));
         colorstats.setInt(hex(rgb), oldvalue+1);
       }
-      catch (JSONException e) {
-        println(e);
+      catch (Exception e) {
+        colorstats.setInt(hex(rgb), 1);
       }
     }
+    colorstats.setInt("frame number", framenumber);
     frames.append(colorstats);
     // prepare next step
     framenumber += 1;
     filename = "frame-" + framenumber + ".png";
-    colorstats = new IntDict();
+    colorstats = new JSONObject();
     // load potential next frame
     frameimage = loadImage(filename, "png");
   }
