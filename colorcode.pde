@@ -1,5 +1,6 @@
 JSONObject json;    // store all frame/color information
-PImage frame;       // current frame to be processed
+JSONArray frames;   // to store all frame-dicts
+PImage frameimage;  // current frame to be processed
 int framenumber;    // counter for the frame number
 String filename;    // name of the frame image
 color rgb;          // color values from image
@@ -9,23 +10,24 @@ PFont font;
 void setup() {
   framenumber = 1;
   filename = "frame-" + framenumber + ".png";
-  frame = loadImage(filename, "png");
+  frameimage = loadImage(filename, "png");
   colorstats = new IntDict();
   json = new JSONObject();
+  json.setString("content", "pixel statistics per frame");
   noLoop();                         // run draw() only once
   colorMode(RGB);
-  size(frame.width, frame.height);  // set up canvas
+  size(frameimage.width, frameimage.height);  // set up canvas
   font = createFont("Liberation Sans",16,true);  // set up font
 }
 
 void draw() {
-  while (null != frame) {
+  while (null != frameimage) {
     // display the image
-    image(frame, 0, 0);
+    image(frameimage, 0, 0);
     // do image processing
-    for (int i=0; i<frame.pixels.length; i++) {
+    for (int i=0; i<frameimage.pixels.length; i++) {
       // hex color = key in dict
-      rgb = frame.pixels[i];
+      rgb = frameimage.pixels[i];
       if (colorstats.hasKey(hex(rgb))) {
         colorstats.add(hex(rgb), 1);
       }
@@ -34,7 +36,7 @@ void draw() {
     framenumber += 1;
     filename = "frame-" + framenumber + ".png";
     // load potential next frame
-    frame = loadImage(filename, "png");
+    frameimage = loadImage(filename, "png");
   }
   json.setInt("frame number", framenumber);
   saveJSONObject(json, "data/framedata.json");
